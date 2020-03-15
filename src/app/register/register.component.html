@@ -1,0 +1,74 @@
+<form (ngSubmit)="save()" [formGroup]="registerForm" class="registration-container" >
+        <div class="form-group">
+            <label for="firstName">FirstName</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName" >
+            <div *ngIf="(registerForm.get('firstName').touched || registerForm.get('firstName').dirty) && registerForm.get('firstName').errors">
+              <div *ngIf="registerForm.get('firstName').errors.required">
+                Please fill First Name
+              </div>
+              <div *ngIf="registerForm.get('firstName').errors.minlength">
+                First Name Must contains Atleast 3 letters
+              </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastName">LastName</label>
+            <input type="text" class="form-control md-4" id="lastName" formControlName="lastName" [ngClass]="{ 'is-invalid': (f.lastName.touched ||submitted) && f.lastName.errors }"  >
+            <div *ngIf="f.lastName.touched && f.lastName.errors" class="invalid-feedback" >
+              <span *ngIf="f.lastName.errors.required">please Enter FirstName</span>
+              <span *ngIf="f.lastName.errors.pattern">please Enter At least 8 characters</span>
+    
+            </div>
+    
+                
+        </div>
+        <div class="form-group">
+        <select formControlName="country" class="form-control">
+          <option [ngValue]="null">Choose your country</option>
+          <option *ngFor="let cnt of countries" [ngValue]="cnt.name">
+           {{ cnt.name }}
+          </option>
+        </select> 
+        <div *ngIf="f.country.touched && f.country.errors">
+          <div *ngIf="f.country.errors.required">please select county</div>
+        </div>
+      </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" id="email" class="form-control" formControlName="email"  aria-describedby="emailHelp">
+        <div *ngIf="registerForm.controls.email.errors && (registerForm.controls.email.touched || registerForm.controls.email.dirty)">
+          <div *ngIf="registerForm.controls.email.errors.required">please enter email id</div>
+          <div *ngIf="registerForm.controls.email.errors.email">please enter valid email format</div>
+        </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password" [ngClass]="{ 'is-invalid':f.password.errors && (f.password.touched || f.password.dirty) }">
+          <div *ngIf="f.password.errors && (f.password.touched || f.password.dirty)" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" [ngClass]="{ 'is-invalid':f.confirmPassword.errors && (f.confirmPassword.touched || f.confirmPassword.dirty) }">
+          <div *ngIf="f.confirmPassword.errors && (f.confirmPassword.touched || f.confirmPassword.dirty)" class="invalid-feedback">
+            <div *ngIf="f.confirmPassword.errors.required">Please Confirm the Password </div>
+            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+        </div>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="accept" formControlName="accept" [ngClass]="{ 'is-invalid': submitted && f.accept.errors }">
+          <label class="form-check-label" for="accept">Agree Terms & Conditions </label>
+          
+          <div *ngIf="submitted && f.accept.errors" class="invalid-feedback" >Accept Ts & Cs is required</div>
+          
+        </div>
+        <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary">Submit</button>
+        <button type="submit"  class="btn btn-primary">Submit</button>
+        <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+      </form>
+      {{ registerForm.value | json }}
+      {{ registerForm.value | json }}
+
+       
